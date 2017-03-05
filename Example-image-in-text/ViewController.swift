@@ -10,45 +10,41 @@ import UIKit
 
 class ViewController: UIViewController {
 
-
-    @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var button: UIButton!
+    @IBOutlet private weak var label: UILabel!
+    @IBOutlet private weak var button: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.label.layer.masksToBounds = true
-        self.label.layer.cornerRadius = 5
+        label.layer.masksToBounds = true
+        label.layer.cornerRadius = 5
 
-        self.button.layer.masksToBounds = true
-        self.button.layer.cornerRadius = 5
+        button.layer.masksToBounds = true
+        button.layer.cornerRadius = 5
         
         
-        self.label.attributedText = self.generateText(text: " Like us!", withImage: "image1")
+        label.attributedText = generateText(" Like us!", withImageName: "image1")
 
-
-        self.button.setAttributedTitle(self.generateText(text: " Cool!", withImage: "image2"), forState: UIControlState.Normal)
-        
+        button.setAttributedTitle(generateText(" Cool!", withImageName: "image2"), for: .normal)
     }
 
-    
-    func generateText(#text:String,withImage image: String) -> NSAttributedString? {
+    func generateText(_ text:String, withImageName image: String) -> NSAttributedString? {
 
         /* attach image */
-        var imageForText = NSTextAttachment()
+        let imageForText = NSTextAttachment()
         imageForText.image = UIImage(named: image)
         
         /* dictionary with attributes */
-        let textAttributes = [NSForegroundColorAttributeName:UIColor.whiteColor(),
-                              NSFontAttributeName:UIFont.systemFontOfSize(15)]
+        let textAttributes = [NSForegroundColorAttributeName:UIColor.white,
+                              NSFontAttributeName:UIFont.systemFont(ofSize: 15)]
 
         /* add attributes to text */
-        var attributedString = NSMutableAttributedString()
-        attributedString.appendAttributedString(NSAttributedString(attachment: imageForText))
-        attributedString.appendAttributedString(NSAttributedString(string: text, attributes: textAttributes))
+        let attributedString = NSMutableAttributedString()
+        attributedString.append(NSAttributedString(attachment: imageForText))
+        attributedString.append(NSAttributedString(string: text, attributes: textAttributes))
         
         /* set vertical aligment for text */
-        let range = NSMakeRange(1, count(text))
+        let range = NSMakeRange(1, text.characters.count)
         attributedString.addAttribute(NSBaselineOffsetAttributeName, value: 8.0, range: range);
         
         return attributedString
